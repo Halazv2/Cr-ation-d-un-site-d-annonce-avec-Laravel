@@ -2,7 +2,7 @@
   <header class="bg-gray-900 sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3">
     <div class="flex items-center justify-between px-4 py-3 sm:p-0">
       <div>
-        <img class="h-8" src="/img/logo-inverted.svg" alt="Workcation">
+        <img class="h-20 ml-4" src="../assets/img/logo.png" alt="Workcation">
       </div>
       <div class="sm:hidden">
         <button @click="isOpen = !isOpen" type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
@@ -13,17 +13,17 @@
         </button>
       </div>
     </div>
-    <nav :class="isOpen ? 'block' : 'hidden'" class="px-2 pt-2 pb-4 sm:flex sm:p-0">
-      <a href="#" class="block px-2 py-1 text-white font-semibold rounded hover:bg-gray-800">List your property</a>
-      <a href="#" class="mt-1 block px-2 py-1 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-2">Trips</a>
-      <a href="#" class="mt-1 block px-2 py-1 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-2">Messages</a>
+    <nav :class="isOpen ? 'block' : 'hidden'" class="mr-4 px-2 pt-2 pb-4 sm:flex sm:p-0">
+      <router-link to="/" class="mt-1 block px-2 py-1 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-2">Home</router-link>
+      <router-link to="/about" class="mt-1 block px-2 py-1 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-2">About</router-link>
+      <router-link to="/login" class="mt-1 block px-2 py-1 text-white bg-gray-700 font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-2">LOGIN</router-link>
     </nav>
   </header>
 </template>
 
 <script>
 export default {
-    name:"NavBar",
+    name:"NavigationComponent",
   data() {
     return {
       isOpen: false,
@@ -34,5 +34,4 @@ export default {
 </script>
 
 <style>
-
 </style>
