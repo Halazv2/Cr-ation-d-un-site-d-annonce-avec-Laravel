@@ -36,6 +36,7 @@ export default {
   text-align: start;
   margin-top: auto;
   margin-bottom: auto;
+  
 }
 form {
   height: 520px;
