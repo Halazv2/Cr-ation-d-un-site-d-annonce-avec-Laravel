@@ -29,7 +29,8 @@ export default {
   name: "SignupComponent",
   methods: {
     Login() {
-      this.$router.push("login");
+      
+      // this.$router.push("login");
     },
   },
 };
