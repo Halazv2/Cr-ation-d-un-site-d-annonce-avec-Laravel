@@ -1,24 +1,42 @@
 <template>
-  <div class="class ">
+  <div class="class">
     <div class="login">
-      <form>
+      <form @submit.prevent action method>
         <h3>Sign Up</h3>
 
         <label for="firstName">First Name</label>
-        <input type="text" placeholder="First Name" />
+        <input
+          type="text"
+          v-model="registreForm.firstName"
+          placeholder="First Name"
+        />
 
         <label for="lastname">Last Name</label>
-        <input type="text" placeholder="Last Name"  />
+        <input
+          type="text"
+          v-model="registreForm.lastName"
+          placeholder="Last Name"
+        />
 
         <label for="Email">Email</label>
-        <input type="Email" placeholder="Email" />
+        <input type="Email" v-model="registreForm.email" placeholder="Email" />
 
         <label for="password">Password</label>
-        <input type="password" placeholder="Password" />
+        <input
+          type="password"
+          v-model="registreForm.password"
+          placeholder="Password"
+        />
 
-        <button class="hover:bg-zinc-100">Sign Up</button>
+        <input
+          type="submit"
+          class="hover:bg-zinc-100"
+          value="Sign Up"
+          @click="register()"
+        />
         <a class="cursor-pointer hover:text-zinc-300" @click="Login()"
-          >already have an account <span class="text-blue-500">Login</span></a> 
+          >already have an account <span class="text-blue-500">Login</span></a
+        >
       </form>
     </div>
   </div>
@@ -27,10 +45,44 @@
 <script>
 export default {
   name: "SignupComponent",
+  data() {
+    return {
+      registreForm: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      },
+    };
+  },
   methods: {
     Login() {
-      
-      // this.$router.push("login");
+      this.$router.push("login");
+    },
+    register() {
+      var myHeaders = new Headers();
+      myHeaders.append("Accept", "application/json");
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+      var urlencoded = new URLSearchParams();
+      urlencoded.append("firstName", this.registreForm.firstName);
+      urlencoded.append("lastName", this.registreForm.lastName);
+      urlencoded.append("email", this.registreForm.email);
+      urlencoded.append("password", this.registreForm.password);
+      urlencoded.append("password_confirmation", this.registreForm.password);
+      fetch("http://localhost:8000/api/register", {
+        method: "POST",
+        headers: myHeaders,
+        body: urlencoded,
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((result) => {
+          if (result) {
+            this.Login();
+            // result["email"] = this.usedEmail;
+          }
+        });
     },
   },
 };
@@ -54,8 +106,8 @@ export default {
   text-align: start;
 }
 form {
-  height: 90%;
-  width: 100%;
+  /* height: 90%; */
+  /* width: 100%; */
   background-color: #2c3e50c2;
   backdrop-filter: blur(10px);
   box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
