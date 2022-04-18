@@ -1,17 +1,54 @@
 <template>
   <div class="class">
     <!-- <h1>im here</h1> -->
-    <div class="login">
-      <form>
-        <h3>Login</h3>
 
+    <div class="login">
+      <form @submit.prevent action method>
+        <div class="flex gap-4 bg-red-500 p-4 rounded-md" v-if="error">
+          <div class="w-max">
+            <div
+              class="
+                h-10
+                w-10
+                flex
+                rounded-full
+                bg-gradient-to-b
+                from-red-100
+                to-red-300
+                text-red-700
+              "
+            >
+              <span
+                class="material-icons material-icons-outlined m-auto"
+                style="font-size: 20px"
+              ></span>
+            </div>
+          </div>
+          <div class="space-y-1 text-sm">
+            <h6 class="font-medium text-white">Fatal error</h6>
+            <p class="text-red-100 leading-tight">
+              Email or password is incorrect
+              <!-- {{ errorMsg }} -->
+            </p>
+          </div>
+        </div>
+        <h3>Login</h3>
         <label for="username">Username</label>
-        <input type="text" placeholder="Email or Phone" id="username" />
+        <input
+          type="text"
+          placeholder="Email"
+          v-model="loginForm.email"
+          id="username"
+        />
 
         <label for="password">Password</label>
-        <input type="password" placeholder="Password" />
+        <input
+          type="password"
+          v-model="loginForm.password"
+          placeholder="Password"
+        />
 
-        <button class="hover:bg-zinc-100">Log In</button>
+        <button class="hover:bg-zinc-100" @click="Login()">Log In</button>
         <a class="cursor-pointer hover:text-zinc-300" @click="Signup()"
           >Don't have an account yet? <span class="text-blue-500">Sign Up</span>
         </a>
@@ -23,9 +60,51 @@
 <script>
 export default {
   name: "LoginComponent",
+  inject: ["setLoggedIn"],
+  data() {
+    return {
+      loginForm: {
+        email: "",
+        password: "",
+      },
+      error: false,
+      errorMsg: "",
+      usedEmail: "",
+    };
+  },
   methods: {
     Signup() {
       this.$router.push("signup");
+    },
+    Login() {
+      var myHeaders = new Headers();
+      myHeaders.append("Accept", "application/json");
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+      var urlencoded = new URLSearchParams();
+      urlencoded.append("email", this.loginForm.email);
+      urlencoded.append("password", this.loginForm.password);
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: urlencoded,
+        // redirect: "follow",
+      };
+      fetch("http://127.0.0.1:8000/api/login", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          // console.log(result);
+          // console.log(result["token"]);
+          if (result["token"]) {
+            this.$router.push("Offres");
+            localStorage.setItem("token", result["token"]);
+            this.setLoggedIn(true);
+          } else {
+            this.error = true;
+            // result = this.errorMsg;
+          }
+        });
     },
   },
 };
@@ -49,7 +128,7 @@ export default {
   text-align: start;
 }
 form {
-  height: 65%;
+  /* height: 72%; */
   width: 100%;
   background-color: #2c3e50c2;
   backdrop-filter: blur(10px);

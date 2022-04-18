@@ -1,18 +1,36 @@
 <template>
   <div>
     <Navigation />
-    <nav>
-
-    </nav>
     <router-view />
   </div>
 </template>
 <script>
 import Navigation from "./components/Navigation.vue";
+import { computed } from "vue";
 
 export default {
   name: "App",
   components: { Navigation },
+  data() {
+    return {
+      isLoggedIn: false,
+      currentRoute: undefined,
+    };
+  },
+  methods: {
+    setLoggedIn(isLoggedIn) {
+      this.isLoggedIn = isLoggedIn;
+    },
+  },
+  provide() {
+    return {
+      isLoggedIn: computed(() => this.isLoggedIn),
+      setLoggedIn: this.setLoggedIn,
+    };
+  },
+  mounted() {
+    this.isLoggedIn = !!localStorage.getItem("token");
+  },
 };
 </script>
 
