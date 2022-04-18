@@ -1,27 +1,39 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OffreController;
+use App\Http\Controllers\DemandesController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-//public routs
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+//public routs
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login',[AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 
 //protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    //logout 
     Route::post('/logout', [AuthController::class, 'logout']);
+    //SEARCH
+    Route::get('/Offres/search/{sujet}', [OffreController::class, 'search']);
+    //update
+    Route::put('/Offres/{$id}', [OffreController::class, 'update']);
+    //delete
+    Route::delete('Offres/{$id}', [OffreController::class, 'destroy']);
+    //add
+    Route::post('/Offres',[OffreController::class ,'store']); 
+    //get one 
+    Route::get('/Offres/{$id}',[OffreController::class,'show']);
+    //get all 
+    Route::get('offres',[OffreController::class , 'index']);
 });
+
+
+
+// resource has all route u may need 
+// Route::resource('Offres',OffreController::class);
+
