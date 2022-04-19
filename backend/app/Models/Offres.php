@@ -10,6 +10,7 @@ class Offres extends Model
     use HasFactory;
     // protected $table = "Offres";
     protected $fillable = [
+        'user_id',
         'Sujet',
         'Description',
         'image'

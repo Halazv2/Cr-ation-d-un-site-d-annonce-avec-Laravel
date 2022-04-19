@@ -3,7 +3,8 @@
     <!-- <h1>This is an offres page</h1> -->
 
     <div class="py-16">
-      <button v-on:click="AddOffre = !AddOffre">Add an Offer</button>
+      <!-- <button v-on:click="AddOffre = !AddOffre" >Add an Offer</button> -->
+      <button v-on:click="sendUserID(id)">Add an Offer</button>
       <div v-if="AddOffre" class="mb-5">
         <add-offres @close="close" />
       </div>
@@ -115,13 +116,16 @@ export default {
       AddOffre: false,
     };
   },
-  methods : {
-        close() {
+  methods: {
+    close() {
       this.AddOffre = !this.AddOffre;
       // this.GetAllUser();
     },
-    
-  }
+    sendUserID(id) {
+      this.AddOffre = !this.AddOffre;
+      id = localStorage.getItem("id");
+    },
+  },
 };
 </script>
 

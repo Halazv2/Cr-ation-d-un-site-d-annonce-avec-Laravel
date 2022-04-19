@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offres;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 
@@ -14,12 +15,14 @@ class OffreController extends Controller
         return Offres::all();
     }
 
-    public function store(Request $request)
+    public function store(Request $request )
     {
+
         $request->validate([
+            'user_id'=> 'required',
             'Sujet' => 'required',
             'Description' => 'required',
-
+            'image' => 'required',
         ]);
         return Offres::create($request->all());
     }
