@@ -68,15 +68,20 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
-  const toLogin = to.name === "login";
+  // check if user is requesting login or signup pages
+  // check if user is already logged in (token is in localStorage)
+  const toAuth = to.name === "login" || to.name === "signup" || to.name === "home";
   const isLoggedIn = !!localStorage.getItem("token");
-
-  if (!toLogin && !isLoggedIn) {
+  if (!toAuth && !isLoggedIn) {
+  // if user is not requesting login or signup pages and user is not logged in, redirect to login page
     return { name: "login" };
   }
-  if (toLogin && isLoggedIn) {
+  if (toAuth && isLoggedIn) {
+  // if user is already logged in and requesting login or signup pages, redirect to source page
     return from;
   }
+  // else let the user continue
   return true;
 });
+
 export default router;

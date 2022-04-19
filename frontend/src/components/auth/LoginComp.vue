@@ -94,15 +94,15 @@ export default {
       fetch("http://127.0.0.1:8000/api/login", requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          // console.log(result);
+          // console.log(result.user['id']);
           // console.log(result["token"]);
+          localStorage.setItem("id",result.user['id'])
           if (result["token"]) {
             this.$router.push("Offres");
             localStorage.setItem("token", result["token"]);
             this.setLoggedIn(true);
           } else {
             this.error = true;
-            // result = this.errorMsg;
           }
         });
     },

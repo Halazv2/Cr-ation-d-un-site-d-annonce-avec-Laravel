@@ -5,7 +5,7 @@
       sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3
     "
   >
-    <span v-if="isLogged">hello</span>
+    <!-- <span v-if="isLogged">hello</span> -->
     <div class="flex items-center justify-between px-4 py-3 sm:p-0">
       <div class="flex justify-center align-baseline">
         <img class="h-20 ml-4" src="../assets/img/logo.png" alt="Workcation" />

@@ -14,7 +14,6 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      currentRoute: undefined,
     };
   },
   methods: {
