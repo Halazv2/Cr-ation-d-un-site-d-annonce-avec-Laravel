@@ -13,27 +13,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //public routs
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-
 //protected routes
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    //logout 
-    Route::post('/logout', [AuthController::class, 'logout']);
-    //SEARCH
-    Route::get('/Offres/search/{sujet}', [OffreController::class, 'search']);
-    //update
-    Route::put('/Offres/{$id}', [OffreController::class, 'update']);
-    //delete
-    Route::delete('Offres/{$id}', [OffreController::class, 'destroy']);
-    //add
-    Route::post('/Offres',[OffreController::class ,'store']); 
-    //get one 
-    Route::get('/Offres/{$id}',[OffreController::class,'show']);
-    //get all 
-    Route::get('offres',[OffreController::class , 'index']);
-});
+// Route::group(['middleware' => ['auth:sanctum']], function () {
+//logout 
+Route::post('/logout', [AuthController::class, 'logout']);
+//SEARCH
+Route::get('/Offres/search/{sujet}', [OffreController::class, 'search']);
+//update
+Route::put('/Offres/{$id}', [OffreController::class, 'update']);
+//delete
+Route::delete('Offres/{$id}', [OffreController::class, 'destroy']);
+//add
+Route::post('/Offres', [OffreController::class, 'store']);
+//get one 
+Route::get('/Offres/{$id}', [OffreController::class, 'show']);
+//get all 
+Route::get('Offres', [OffreController::class, 'index']);
+// });
 
 
 
 // resource has all route u may need 
 // Route::resource('Offres',OffreController::class);
-
