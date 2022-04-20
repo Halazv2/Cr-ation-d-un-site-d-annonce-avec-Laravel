@@ -89,7 +89,6 @@ export default {
         method: "POST",
         headers: myHeaders,
         body: urlencoded,
-        // redirect: "follow",
       };
       fetch("http://127.0.0.1:8000/api/login", requestOptions)
         .then((response) => response.json())
