@@ -6,6 +6,7 @@
         <form
           class="bg-white p-10 rounded-lg shadow-lg min-w-full"
           @submit.prevent
+          enctype="multipart/form-data"
         >
           <h1
             class="text-center text-2xl mb-6 text-gray-600 font-bold font-sans"
@@ -79,6 +80,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "AddOffres",
   data() {
@@ -92,32 +95,18 @@ export default {
   },
   methods: {
     uploadImg(e) {
-      this.image = e.target.files[0];
-      console.log(this.image);
+      this.addOffreForm.image = e.target.files[0];
     },
     addOffer() {
-      var myHeaders = new Headers();
-      myHeaders.append("Accept", "application/json");
-      myHeaders.append("Content-Type", "multipart/form-data");
-      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-      var urlencoded = new URLSearchParams();
-      urlencoded.append("Sujet", this.addOffreForm.Sujet);
-      urlencoded.append("Description", this.addOffreForm.Description);
-      urlencoded.append("image", this.addOffreForm.image);
-      urlencoded.append("user_id", localStorage.getItem("id"));
-
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: urlencoded,
-        // redirect: "follow",
-      };
-
-      fetch("http://127.0.0.1:8000/api/Offres", requestOptions)
-        .then((response) => response.json())
-        .then((result) => console.log(result))
-        .catch((error) => console.log("error", error));
+      var formData = new FormData();
+      formData.append("Sujet", this.addOffreForm.Sujet);
+      formData.append("Description", this.addOffreForm.Description);
+      formData.append("image", this.addOffreForm.image);
+      formData.append("user_id", localStorage.getItem("id"));
+      console.log(this.addOffreForm.image);
+      axios
+        .post("http://localhost:8000/api/Offres", formData)
+        .then((result) => console.log(result.data));
     },
   },
 };
