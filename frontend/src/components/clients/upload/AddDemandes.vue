@@ -106,7 +106,14 @@ export default {
       console.log(this.addOffreForm.image);
       axios
         .post("http://localhost:8000/api/Demands", formData)
-        .then((result) => console.log(result.data));
+        .then((result) => {
+          return JSON.stringify(result.data);
+        })
+        .then((res) => {
+          if (res) {
+            this.$emit("getOffres");
+          }
+        });
     },
   },
 };
