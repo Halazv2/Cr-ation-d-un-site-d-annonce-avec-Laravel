@@ -6,9 +6,13 @@
       <!-- <button v-on:click="AddOffre = !AddOffre" >Add an Offer</button> -->
       <button v-on:click="sendUserID(id)">Add an Offer</button>
       <div v-if="AddOffre" class="mb-5">
-        <add-offres @close="close" />
+        <add-offres @close="close" @getOffres="getOffres" />
       </div>
-      <div class="container z-0 m-auto px-6 text-gray-500 md:px-12 xl:px-0">
+      <div
+        v-for="offreInfo in offresInfos"
+        :key="offreInfo.id"
+        class="container z-0 m-auto px-6 py-6 text-gray-500 md:px-12 xl:px-0"
+      >
         <div class="mx-auto flex col gap-6 md:w-3/5">
           <div
             class="bg-white rounded-2xl shadow-xl px-8 py-12 sm:px-12 lg:px-8"
@@ -24,7 +28,10 @@
                     width="220"
                     loading="lazy"
                   />
-                  <h3 class="flex items-center px-2 text-black">Joe Biden</h3>
+                  <h3 class="flex items-center px-2 text-black">
+                    Joe Biden {{ offreInfo.id }}
+                  </h3>
+                  <!-- <p>{{offreInfo.created_at}}</p> -->
                 </div>
                 <div class="flex relative justify-end">
                   <button
@@ -75,6 +82,7 @@
                       <a
                         href="#"
                         class="block px-4 py-2 text-sm capitalize text-red-700"
+                        @click="DeleteOffre(offreInfo.id)"
                       >
                         Delete
                       </a>
@@ -84,16 +92,14 @@
               </div>
               <div>
                 <h3 class="text-2xl font-semibold text-left text-blue-700">
-                  Selling book "Of Women And Salt"
+                  {{ offreInfo.Sujet }}
                 </h3>
                 <p class="mb-6 text-left">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptatum quae vitae accusantium quisquam enim, ullam culpa
-                  dolor magni itaque neque.
+                  {{ offreInfo.Description }}
                 </p>
                 <img
-                  src="../../assets/img/ofwomenandsalt.jpg"
-                  class="rounded"
+                  :src="'http://127.0.0.1:8000/images/' + offreInfo.image"
+                  class="rounded w-[704px]"
                   alt=""
                 />
               </div>
@@ -114,7 +120,18 @@ export default {
     return {
       dropdownOpen: false,
       AddOffre: false,
+
+      offresInfos: [
+        // id: "",
+        // Description: "",
+        // Sujet: "",
+        // image: "",
+        // created_at: "",
+      ],
     };
+  },
+  mounted() {
+    this.getOffres();
   },
   methods: {
     close() {
@@ -123,7 +140,31 @@ export default {
     },
     sendUserID(id) {
       this.AddOffre = !this.AddOffre;
-      id = localStorage.getItem("id");
+    },
+    getOffres() {
+      fetch(`http://127.0.0.1:8000/api/Offres`, {
+        method: "GET",
+      })
+        .then((result) => {
+          return result.json();
+        })
+        .then((reponse) => {
+          console.log(reponse);
+          //spread operater (...push)
+          this.offresInfos = reponse;
+        });
+    },
+    DeleteOffre(id) {
+      fetch(`http://127.0.0.1:8000/api/Offres/${id}`, {
+        method: "DELETE",
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          if (result) {
+            this.getOffres();
+            return (this.dropdownOpen = false);
+          }
+        });
     },
   },
 };
