@@ -90,7 +90,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>  
               <div>
                 <h3 class="text-2xl font-semibold text-left text-blue-700">
                   I need this book "Sapiens"
@@ -117,11 +117,6 @@
 <script>
 export default {
   name: "DemandsComp",
-    data() {
-    return {
-      dropdownOpen: false,
-    };
-  },
 };
 </script>
 
