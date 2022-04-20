@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 // use App\Models\Passport\Token;
 
-
-
 class AuthController extends Controller
 {
+    public function index()
+    {
+        return User::all();
+    }
     public function register(Request $request)
     {
         $fields = $request->validate([
@@ -71,5 +73,19 @@ class AuthController extends Controller
         });
 
         return response()->json('Successfully logged out');
+    }
+    //prfile
+    //prfile
+    //prfile
+    public function show($id)
+    {
+        return User::find($id);
+    }
+    //delete account
+    //delete account
+    //delete account
+    public function destroy($id)
+    {
+        return User::destroy($id);
     }
 }
