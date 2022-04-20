@@ -15,16 +15,24 @@ class OffreController extends Controller
         return Offres::all();
     }
 
-    public function store(Request $request )
+    public function store(Request $request)
     {
-
         $request->validate([
-            'user_id'=> 'required',
+            'user_id' => 'required',
             'Sujet' => 'required',
             'Description' => 'required',
             'image' => 'required',
         ]);
-        return Offres::create($request->all());
+        // verfy if request has image 
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            // give it an unique id + extention
+            $uniqueFileName = uniqid() . '.' . $file->getClientOriginalExtension();
+            // move the image to public/images file 
+            $file->move(public_path('images'), $uniqueFileName);
+        }
+        // save all information we got + save image in data base with name we create with uniquid 
+        return Offres::create([...$request->all(), "image" => $uniqueFileName]);
     }
 
     public function show($id)
