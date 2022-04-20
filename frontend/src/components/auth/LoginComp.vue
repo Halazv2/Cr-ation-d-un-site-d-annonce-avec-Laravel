@@ -4,32 +4,22 @@
 
     <div class="login">
       <form @submit.prevent action method>
-        <div class="flex gap-4 bg-red-500 p-4 rounded-md" v-if="error">
-          <div class="w-max">
-            <div
-              class="
-                h-10
-                w-10
-                flex
-                rounded-full
-                bg-gradient-to-b
-                from-red-100
-                to-red-300
-                text-red-700
-              "
-            >
-              <span
-                class="material-icons material-icons-outlined m-auto"
-                style="font-size: 20px"
-              ></span>
-            </div>
-          </div>
-          <div class="space-y-1 text-sm">
-            <h6 class="font-medium text-white">Fatal error</h6>
-            <p class="text-red-100 leading-tight">
-              Email or password is incorrect
-              <!-- {{ errorMsg }} -->
-            </p>
+          <div class="alert alert-error shadow-lg" v-if="error">
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="stroke-current flex-shrink-0 h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>Error! email or password is incorrect.</span>
           </div>
         </div>
         <h3>Login</h3>
@@ -93,11 +83,9 @@ export default {
       fetch("http://127.0.0.1:8000/api/login", requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          // console.log(result.user['id']);
-          // console.log(result["token"]);
-          localStorage.setItem("id",result.user['id'])
           if (result["token"]) {
             this.$router.push("Offres");
+            localStorage.setItem("id",result.user['id'])
             localStorage.setItem("token", result["token"]);
             this.setLoggedIn(true);
           } else {

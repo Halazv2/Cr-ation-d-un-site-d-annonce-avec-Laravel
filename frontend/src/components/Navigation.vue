@@ -29,12 +29,7 @@
         <button
           @click="isOpen = !isOpen"
           type="button"
-          class="
-            block
-            text-gray-500
-            hover:text-white
-            focus:text-white focus:outline-none
-          "
+          class="block text-gray-500 focus:text-white focus:outline-none"
         >
           <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
             <path
@@ -179,11 +174,11 @@ export default {
     Profile() {
       this.active = "Profile";
     },
-    logout(){
-      localStorage.removeItem('token');
-      this.$router.replace("login")
-      this.setLoggedIn(false)
-    }
+    logout() {
+      localStorage.removeItem("token");
+      this.$router.replace("login");
+      this.setLoggedIn(false);
+    },
   },
 };
 </script>
