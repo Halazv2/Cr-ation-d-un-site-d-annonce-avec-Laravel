@@ -84,6 +84,11 @@ import axios from "axios";
 
 export default {
   name: "AddOffres",
+  props: {
+    getOffres: {
+      type: Function,
+    },
+  },
   data() {
     return {
       addOffreForm: {
@@ -106,7 +111,13 @@ export default {
       console.log(this.addOffreForm.image);
       axios
         .post("http://localhost:8000/api/Offres", formData)
-        .then((result) => console.log(result.data));
+        .then((result) => {
+          if (result) {
+            console.log(result.data);
+            this.getOffres();
+            this.$emit("close");
+          }
+        });
     },
   },
 };
