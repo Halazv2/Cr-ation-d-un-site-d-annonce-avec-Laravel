@@ -6,8 +6,9 @@
       <!-- <button v-on:click="AddOffre = !AddOffre" >Add an Offer</button> -->
       <button v-on:click="sendUserID(id)">Add an Offer</button>
       <div v-if="AddOffre" class="mb-5">
-        <add-offres @close="close" @getOffres="getOffres" />
+        <add-offres @close="close" :getOffres="getOffres" />
       </div>
+      <div v-if="!offresInfos?.length">There is no Offer yet</div>
       <div
         v-for="offreInfo in offresInfos"
         :key="offreInfo.id"
@@ -33,7 +34,10 @@
                   </h3>
                   <!-- <p>{{offreInfo.created_at}}</p> -->
                 </div>
-                <div class="flex relative justify-end">
+                <div
+                  class="flex relative justify-end"
+                  v-if="offreInfo.user_id == id"
+                >
                   <button
                     v-on:click="dropdownOpen = !dropdownOpen"
                     class="
@@ -58,6 +62,7 @@
                       />
                     </svg>
                   </button>
+
                   <div v-if="dropdownOpen">
                     <div
                       class="
@@ -73,19 +78,52 @@
                         z-20
                       "
                     >
-                      <a
-                        href="#"
+                      <!-- Update -->
+                      <!-- Update -->
+                      <!-- Update -->
+                      <label
+                        for="my-modal-6"
                         class="block px-4 py-2 text-sm capitalize text-blue-700"
                       >
                         Edit
-                      </a>
-                      <a
-                        href="#"
+                      </label>
+                      <!-- <UpdateOffre /> -->
+                      <!-- Delete -->
+                      <!-- Delete -->
+                      <!-- Delete -->
+                      <label
                         class="block px-4 py-2 text-sm capitalize text-red-700"
-                        @click="DeleteOffre(offreInfo.id)"
+                        for="my-modal"
                       >
                         Delete
-                      </a>
+                      </label>
+                      <input
+                        type="checkbox"
+                        id="my-modal"
+                        class="modal-toggle"
+                      />
+                      <div class="modal">
+                        <div class="modal-box">
+                          <!-- <label
+                            for="my-modal"
+                            class="btn btn-sm btn-circle absolute right-2 top-2"
+                            >✕</label
+                          > -->
+                          <h3 class="font-bold text-lg">
+                            Are you sure you want to delete this post?
+                          </h3>
+                          <div class="modal-action">
+                            <label for="my-modal" class="btn btn-outline"
+                              >No</label
+                            >
+                            <label
+                              @click="DeleteOffre(offreInfo.id)"
+                              class="btn btn-error"
+                              >Yes</label
+                            >
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -113,6 +151,7 @@
 
 <script>
 import AddOffres from "./upload/AddOffres.vue";
+// import UpdateOffre from "./upload/AddOffres.vue";
 export default {
   components: { AddOffres },
   name: "OffresComp",
@@ -120,14 +159,8 @@ export default {
     return {
       dropdownOpen: false,
       AddOffre: false,
-
-      offresInfos: [
-        // id: "",
-        // Description: "",
-        // Sujet: "",
-        // image: "",
-        // created_at: "",
-      ],
+      offresInfos: [],
+      id: localStorage.getItem("id"),
     };
   },
   mounted() {
