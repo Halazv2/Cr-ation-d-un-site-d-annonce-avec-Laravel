@@ -9,6 +9,7 @@ class Demandes extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'user_id',
         'Sujet',
         'Description',
         'image'

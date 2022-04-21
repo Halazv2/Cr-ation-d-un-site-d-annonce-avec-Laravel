@@ -11,7 +11,7 @@
           <h1
             class="text-center text-2xl mb-6 text-gray-600 font-bold font-sans"
           >
-            Add an offre
+            Add an demandes
           </h1>
           <div>
             <label
@@ -23,7 +23,7 @@
               class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
               type="textarea"
               name="Sujet"
-              v-model="addOffreForm.Sujet"
+              v-model="addDemandForm.Sujet"
               id="Sujet"
               placeholder="Sujet"
             />
@@ -37,7 +37,7 @@
             <input
               class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
               type="textarea"
-              v-model="addOffreForm.Description"
+              v-model="addDemandForm.Description"
               name="Sujet"
               id="Sujet"
               placeholder="Sujet"
@@ -62,15 +62,15 @@
           <div class="mt-4 flex gap-4 justify-center">
             <input
               type="submit"
-              @click="addOffer()"
+              @click="AddDemande()"
               value="Confirmer"
-              class="bg-sky-600 hover:bg-sky-700 p-2"
+              class="bg-sky-600 rounded hover:bg-sky-700 p-2"
             />
             <input
               type="submit"
               value="Cancel"
               @click="$emit('close')"
-              class="bg-red-600 hover:bg-red-700 text-white-400/0 p-2"
+              class="bg-red-600 hover:bg-red-700 rounded text-white-400/0 p-2"
             />
           </div>
         </form>
@@ -83,10 +83,15 @@
 import axios from "axios";
 
 export default {
-  name: "AddOffres",
+  name: "addDemand",
+  props: {
+    getDemands: {
+      type: Function,
+    },
+  },
   data() {
     return {
-      addOffreForm: {
+      addDemandForm: {
         Description: "",
         Sujet: "",
         image: "",
@@ -95,23 +100,22 @@ export default {
   },
   methods: {
     uploadImg(e) {
-      this.addOffreForm.image = e.target.files[0];
+      this.addDemandForm.image = e.target.files[0];
     },
-    addOffer() {
+    AddDemande() {
       var formData = new FormData();
-      formData.append("Sujet", this.addOffreForm.Sujet);
-      formData.append("Description", this.addOffreForm.Description);
-      formData.append("image", this.addOffreForm.image);
+      formData.append("Sujet", this.addDemandForm.Sujet);
+      formData.append("Description", this.addDemandForm.Description);
+      formData.append("image", this.addDemandForm.image);
       formData.append("user_id", localStorage.getItem("id"));
-      console.log(this.addOffreForm.image);
+      // console.log(this.addDemandForm.image);
       axios
-        .post("http://localhost:8000/api/Demands", formData)
+        .post("http://localhost:8000/api/Demandes", formData)
         .then((result) => {
-          return JSON.stringify(result.data);
-        })
-        .then((res) => {
-          if (res) {
-            this.$emit("getOffres");
+          if (result) {
+            // console.log(result.data);
+            this.getDemands();
+            this.$emit("close");
           }
         });
     },

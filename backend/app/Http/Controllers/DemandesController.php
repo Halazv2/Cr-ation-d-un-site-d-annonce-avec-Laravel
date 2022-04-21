@@ -29,7 +29,7 @@ class DemandesController extends Controller
             // give it an unique id + extention
             $uniqueFileName = uniqid() . '.' . $file->getClientOriginalExtension();
             // move the image to public/images file 
-            $file->move(public_path('images'), $uniqueFileName);
+            $file->move(public_path('images/Demands'), $uniqueFileName);
         }
         // save all information we got + save image in data base with name we create with uniquid 
         return Demandes::create([...$request->all(), "image" => $uniqueFileName]);
@@ -46,7 +46,7 @@ class DemandesController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $uniqueFileName = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images'), $uniqueFileName);
+            $file->move(public_path('images/Demands'), $uniqueFileName);
         }
         $offre->update([...$request->all(), "image" => $uniqueFileName]);
         return $offre;

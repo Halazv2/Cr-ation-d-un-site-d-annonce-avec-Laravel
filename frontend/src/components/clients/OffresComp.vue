@@ -126,11 +126,6 @@
                       />
                       <div class="modal z-50">
                         <div class="modal-box">
-                          <!-- <label
-                            for="my-modal"
-                            class="btn btn-sm btn-circle absolute right-2 top-2"
-                            >✕</label
-                          > -->
                           <h3 class="font-bold text-lg">
                             Are you sure you want to delete this post?
                           </h3>
@@ -201,9 +196,6 @@ export default {
     sendUserID(id) {
       this.AddOffre = !this.AddOffre;
     },
-    // getDeleteID(id) {
-    //   this.OffreID = id;
-    // },
     getPostID(id) {
       console.log(id);
       this.UpdateOffreF = !this.UpdateOffreF;

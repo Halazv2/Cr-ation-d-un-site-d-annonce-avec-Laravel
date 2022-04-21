@@ -2,21 +2,21 @@
   <div>
     <!-- <h1>This is an offres page</h1> -->
     <div class="py-16">
-      <button v-on:click="sendUserID(id)">Add an Offer</button>
-      <div v-if="AddOffre" class="mb-5">
-        <add-offres @close="close" :getOffres="getOffres" />
+      <button v-on:click="sendUserID(id)">Add an demandes</button>
+      <div v-if="AddDemande" class="mb-5">
+        <AddDemandes @close="close" :getDemands="getDemands" />
       </div>
-      <div v-if="UpdateOffreF" class="mb-5">
-        <UpdateOffre
+      <div v-if="UpdatedemandeF" class="mb-5">
+        <UpdateDemandes
           @close="closeUpdate"
-          :OffreID="OffreID"
-          @getOffres="getOffres"
+          :demandeID="demandeID"
+          @getDemands="getDemands"
         />
       </div>
-      <div v-if="offresInfos.length === 0">There is no Offer yet</div>
+      <div v-if="demandesInfos.length === 0">There is no demande yet</div>
       <div
-        v-for="offreInfo in offresInfos"
-        :key="offreInfo.id"
+        v-for="demandeInfo in demandesInfos"
+        :key="demandeInfo.id"
         class="container z-0 m-auto px-6 py-6 text-gray-500 md:px-12 xl:px-0"
       >
         <div class="mx-auto flex col gap-6 md:w-3/5">
@@ -35,13 +35,13 @@
                     loading="lazy"
                   />
                   <h3 class="flex items-center px-2 text-black">
-                    Joe Biden {{ offreInfo.id }}
+                    Joe Biden {{ demandeInfo.id }}
                   </h3>
                   <!-- <p>{{offreInfo.created_at}}</p> -->
                 </div>
                 <div
                   class="flex relative justify-end"
-                  v-if="offreInfo.user_id == id"
+                  v-if="demandeInfo.user_id == id"
                 >
                   <button
                     v-on:click="dropdownOpen = !dropdownOpen"
@@ -96,7 +96,7 @@
                           text-blue-700
                           cursor-pointer
                         "
-                        @click="getPostID(offreInfo.id)"
+                        @click="getPostID(demandeInfo.id)"
                       >
                         Edit
                       </label>
@@ -115,7 +115,7 @@
                           cursor-pointer
                         "
                         for="my-modal"
-                        @click="OffreID=offreInfo.id"
+                        @click="demandeID=demandeInfo.id"
                       >
                         Delete
                       </label>
@@ -139,7 +139,7 @@
                               >No</label
                             >
                             <label
-                              @click="DeleteOffre()"
+                              @click="Deletedemande()"
                               class="btn btn-error"
                               >Yes</label
                             >
@@ -152,13 +152,13 @@
               </div>
               <div>
                 <h3 class="text-2xl font-semibold text-left text-blue-700">
-                  {{ offreInfo.Sujet }}
+                  {{ demandeInfo.Sujet }}
                 </h3>
                 <p class="mb-6 text-left">
-                  {{ offreInfo.Description }}
+                  {{ demandeInfo.Description }}
                 </p>
                 <img
-                  :src="'http://127.0.0.1:8000/images/' + offreInfo.image"
+                  :src="'http://127.0.0.1:8000/images/Demands/' + demandeInfo.image"
                   class="rounded w-[704px]"
                   alt=""
                 />
@@ -172,45 +172,45 @@
 </template>
 
 <script>
-import AddOffres from "./upload/AddOffres.vue";
-import UpdateOffre from "./update/UpdateOffres.vue";
+import AddDemandes from "./upload/AddDemandes.vue";
+import UpdateDemandes from "./update/UpdateDemandes.vue";
 export default {
-  components: { AddOffres, UpdateOffre },
+  components: { AddDemandes, UpdateDemandes },
   name: "OffresComp",
 
   data() {
     return {
       dropdownOpen: false,
-      AddOffre: false,
-      UpdateOffreF: false,
-      offresInfos: [],
-      OffreID: "",
+      AddDemande: false,
+      UpdatedemandeF: false,
+      demandesInfos: [],
+      demandeID: "",
       id: localStorage.getItem("id"),
     };
   },
   mounted() {
-    this.getOffres();
+    this.getDemands();
   },
   methods: {
     close() {
-      this.AddOffre = !this.AddOffre;
+      this.AddDemande = !this.AddDemande;
     },
     closeUpdate() {
-      this.UpdateOffreF = !this.UpdateOffreF;
+      this.UpdatedemandeF = !this.UpdatedemandeF;
     },
     sendUserID(id) {
-      this.AddOffre = !this.AddOffre;
+      this.AddDemande = !this.AddDemande;
     },
     // getDeleteID(id) {
     //   this.OffreID = id;
     // },
     getPostID(id) {
       console.log(id);
-      this.UpdateOffreF = !this.UpdateOffreF;
-      this.OffreID = id;
+      this.UpdatedemandeF = !this.UpdatedemandeF;
+      this.demandeID = id;
     },
-    getOffres() {
-      fetch(`http://127.0.0.1:8000/api/Offres`, {
+    getDemands() {
+      fetch(`http://127.0.0.1:8000/api/Demandes`, {
         method: "GET",
       })
         .then((result) => {
@@ -219,17 +219,17 @@ export default {
         .then((reponse) => {
           // console.log(reponse);
           //spread operater (...push)
-          this.offresInfos = reponse.reverse();
+          this.demandesInfos = reponse.reverse();
         });
     },
-    DeleteOffre() {
-      fetch(`http://127.0.0.1:8000/api/Offres/${this.OffreID}`, {
+    Deletedemande() {
+      fetch(`http://localhost:8000/api/Demandes/${this.demandeID}`, {
         method: "DELETE",
       })
         .then((response) => response.json())
         .then((result) => {
           if (result) {
-            this.getOffres();
+            this.getDemands();
             return (this.dropdownOpen = false);
           }
         });
