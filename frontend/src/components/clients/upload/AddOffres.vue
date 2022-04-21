@@ -64,13 +64,13 @@
               type="submit"
               @click="addOffer()"
               value="Confirmer"
-              class="bg-sky-600 hover:bg-sky-700 p-2"
+              class="bg-sky-600 rounded hover:bg-sky-700 p-2"
             />
             <input
               type="submit"
               value="Cancel"
               @click="$emit('close')"
-              class="bg-red-600 hover:bg-red-700 text-white-400/0 p-2"
+              class="bg-red-600 hover:bg-red-700 rounded text-white-400/0 p-2"
             />
           </div>
         </form>
@@ -108,12 +108,12 @@ export default {
       formData.append("Description", this.addOffreForm.Description);
       formData.append("image", this.addOffreForm.image);
       formData.append("user_id", localStorage.getItem("id"));
-      console.log(this.addOffreForm.image);
+      // console.log(this.addOffreForm.image);
       axios
         .post("http://localhost:8000/api/Offres", formData)
         .then((result) => {
           if (result) {
-            console.log(result.data);
+            // console.log(result.data);
             this.getOffres();
             this.$emit("close");
           }

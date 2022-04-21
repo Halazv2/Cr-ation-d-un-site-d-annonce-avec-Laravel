@@ -43,7 +43,12 @@ class OffreController extends Controller
     public function update(Request $request, $id)
     {
         $offre = Offres::find($id);
-        $offre->update($request->all());
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $uniqueFileName = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images'), $uniqueFileName);
+        }
+        $offre->update([...$request->all(), "image" => $uniqueFileName]);
         return $offre;
     }
 

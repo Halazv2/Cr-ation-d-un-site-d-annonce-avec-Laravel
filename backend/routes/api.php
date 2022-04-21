@@ -24,7 +24,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 //SEARCH
 Route::get('/Offres/search/{sujet}', [OffreController::class, 'search']);
 //update
-Route::put('/Offres/{id}', [OffreController::class, 'update']);
+Route::post('/Offres/{id}', [OffreController::class, 'update']);
 //delete
 Route::delete('Offres/{id}', [OffreController::class, 'destroy']);
 //add
@@ -33,9 +33,19 @@ Route::post('/Offres', [OffreController::class, 'store']);
 Route::get('/Offres/{id}', [OffreController::class, 'show']);
 //get all 
 Route::get('/Offres', [OffreController::class, 'index']);
+
+
+
+//SEARCH
+Route::get('/Demandes/search/{sujet}', [DemandesController::class, 'search']);
+//update
+Route::post('/Demandes/{id}', [DemandesController::class, 'update']);
+//delete
+Route::delete('Demandes/{id}', [DemandesController::class, 'destroy']);
+//add
+Route::post('/Demandes', [DemandesController::class, 'store']);
+//get one 
+Route::get('/Demandes/{id}', [DemandesController::class, 'show']);
+//get all 
+Route::get('/Demandes', [DemandesController::class, 'index']);
 // });
-
-
-
-// resource has all route u may need 
-// Route::resource('Offres',OffreController::class);

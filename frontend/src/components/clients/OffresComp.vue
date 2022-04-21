@@ -1,14 +1,19 @@
 <template>
   <div>
     <!-- <h1>This is an offres page</h1> -->
-
     <div class="py-16">
-      <!-- <button v-on:click="AddOffre = !AddOffre" >Add an Offer</button> -->
       <button v-on:click="sendUserID(id)">Add an Offer</button>
       <div v-if="AddOffre" class="mb-5">
         <add-offres @close="close" :getOffres="getOffres" />
       </div>
-      <div v-if="!offresInfos?.length">There is no Offer yet</div>
+      <div v-if="UpdateOffreF" class="mb-5">
+        <UpdateOffre
+          @close="closeUpdate"
+          :OffreID="OffreID"
+          @getOffres="getOffres"
+        />
+      </div>
+      <div v-if="offresInfos.length === 0">There is no Offer yet</div>
       <div
         v-for="offreInfo in offresInfos"
         :key="offreInfo.id"
@@ -75,25 +80,42 @@
                         bg-white
                         rounded-md
                         shadow-xl
-                        z-20
+                        z-10
                       "
                     >
                       <!-- Update -->
                       <!-- Update -->
                       <!-- Update -->
                       <label
-                        for="my-modal-6"
-                        class="block px-4 py-2 text-sm capitalize text-blue-700"
+                        class="
+                          block
+                          px-4
+                          py-2
+                          text-sm
+                          capitalize
+                          text-blue-700
+                          cursor-pointer
+                        "
+                        @click="getPostID(offreInfo.id)"
                       >
                         Edit
                       </label>
-                      <!-- <UpdateOffre /> -->
+
                       <!-- Delete -->
                       <!-- Delete -->
                       <!-- Delete -->
                       <label
-                        class="block px-4 py-2 text-sm capitalize text-red-700"
+                        class="
+                          block
+                          px-4
+                          py-2
+                          text-sm
+                          capitalize
+                          text-red-700
+                          cursor-pointer
+                        "
                         for="my-modal"
+                        @click="OffreID=offreInfo.id"
                       >
                         Delete
                       </label>
@@ -102,7 +124,7 @@
                         id="my-modal"
                         class="modal-toggle"
                       />
-                      <div class="modal">
+                      <div class="modal z-50">
                         <div class="modal-box">
                           <!-- <label
                             for="my-modal"
@@ -117,7 +139,7 @@
                               >No</label
                             >
                             <label
-                              @click="DeleteOffre(offreInfo.id)"
+                              @click="DeleteOffre()"
                               class="btn btn-error"
                               >Yes</label
                             >
@@ -151,15 +173,18 @@
 
 <script>
 import AddOffres from "./upload/AddOffres.vue";
-// import UpdateOffre from "./upload/AddOffres.vue";
+import UpdateOffre from "./update/UpdateOffres.vue";
 export default {
-  components: { AddOffres },
+  components: { AddOffres, UpdateOffre },
   name: "OffresComp",
+
   data() {
     return {
       dropdownOpen: false,
       AddOffre: false,
+      UpdateOffreF: false,
       offresInfos: [],
+      OffreID: "",
       id: localStorage.getItem("id"),
     };
   },
@@ -169,10 +194,20 @@ export default {
   methods: {
     close() {
       this.AddOffre = !this.AddOffre;
-      // this.GetAllUser();
+    },
+    closeUpdate() {
+      this.UpdateOffreF = !this.UpdateOffreF;
     },
     sendUserID(id) {
       this.AddOffre = !this.AddOffre;
+    },
+    // getDeleteID(id) {
+    //   this.OffreID = id;
+    // },
+    getPostID(id) {
+      console.log(id);
+      this.UpdateOffreF = !this.UpdateOffreF;
+      this.OffreID = id;
     },
     getOffres() {
       fetch(`http://127.0.0.1:8000/api/Offres`, {
@@ -182,13 +217,13 @@ export default {
           return result.json();
         })
         .then((reponse) => {
-          console.log(reponse);
+          // console.log(reponse);
           //spread operater (...push)
-          this.offresInfos = reponse;
+          this.offresInfos = reponse.reverse();
         });
     },
-    DeleteOffre(id) {
-      fetch(`http://127.0.0.1:8000/api/Offres/${id}`, {
+    DeleteOffre() {
+      fetch(`http://127.0.0.1:8000/api/Offres/${this.OffreID}`, {
         method: "DELETE",
       })
         .then((response) => response.json())
