@@ -12,8 +12,10 @@ class OffreController extends Controller
 
     public function index()
     {
-        return Offres::all();
-    }
+        $Offres = Offres::join('users', 'users.id', '=', 'Offres.user_id')
+        ->select('Offres.*', 'users.firstName','users.lastName')
+        ->get();
+    return $Offres;    }
 
     public function store(Request $request)
     {

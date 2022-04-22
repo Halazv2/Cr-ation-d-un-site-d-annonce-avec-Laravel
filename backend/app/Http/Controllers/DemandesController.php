@@ -12,7 +12,10 @@ class DemandesController extends Controller
 
     public function index()
     {
-        return Demandes::all();
+        $Demandes = Demandes::join('users', 'users.id', '=', 'demandes.user_id')
+            ->select('demandes.*', 'users.firstName','users.lastName')
+            ->get();
+        return $Demandes;
     }
 
     public function store(Request $request)

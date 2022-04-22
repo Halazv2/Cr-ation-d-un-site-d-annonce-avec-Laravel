@@ -35,7 +35,7 @@
                     loading="lazy"
                   />
                   <h3 class="flex items-center px-2 text-black">
-                    Joe Biden {{ demandeInfo.id }}
+                    {{demandeInfo.firstName}} {{demandeInfo.lastName}} {{ demandeInfo.id }}
                   </h3>
                   <!-- <p>{{offreInfo.created_at}}</p> -->
                 </div>
