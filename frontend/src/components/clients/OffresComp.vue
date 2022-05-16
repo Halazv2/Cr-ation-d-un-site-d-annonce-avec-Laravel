@@ -35,7 +35,7 @@
                     loading="lazy"
                   />
                   <h3 class="flex items-center px-2 text-black">
-                    {{demandeInfo.firstName}} {{demandeInfo.lastName}}  {{ offreInfo.id }}
+                    {{offreInfo.firstName}} {{offreInfo.lastName}}  {{ offreInfo.id }}
                   </h3>
                   <!-- <p>{{offreInfo.created_at}}</p> -->
                 </div>
