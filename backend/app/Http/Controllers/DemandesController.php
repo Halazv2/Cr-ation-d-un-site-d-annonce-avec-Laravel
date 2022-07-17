@@ -12,9 +12,7 @@ class DemandesController extends Controller
 
     public function index()
     {
-        $Demandes = Demandes::join('users', 'users.id', '=', 'demandes.user_id')
-            ->select('demandes.*', 'users.firstName','users.lastName')
-            ->get();
+        $Demandes = Demandes::with('user')->get();
         return $Demandes;
     }
 

@@ -32,12 +32,12 @@
           class="tooltip"
           data-tip="you can't get your account back after delete it"
         >
-          <button @click="deleteAccount()" class="btn btn btn-error">
+          <button @click="deleteAccount()" class="btn  btn-error">
             Delete Account
           </button>
         </div>
         <div>
-          <button class="btn btn-outline btn mt-3">Log Out</button>
+          <button class="btn btn-outline  mt-3">Log Out</button>
         </div>
       </div>
     </div>

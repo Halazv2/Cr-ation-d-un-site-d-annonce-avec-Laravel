@@ -19,5 +19,14 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function offres()
+    {
+        return $this->hasMany(Offres::class,'user_id');
+    }
+
+    public function demandes()
+    {
+        return $this->hasMany(Demandes::class,'user_id');
+    }
 
 }

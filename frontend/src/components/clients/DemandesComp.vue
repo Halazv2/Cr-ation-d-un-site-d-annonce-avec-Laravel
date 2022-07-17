@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- <h1>This is an offres page</h1> -->
-    <div class="py-16">
-      <button v-on:click="sendUserID(id)">Add an demandes</button>
+    <div class="py-16 flex flex-col justify-center items-center">
+      <button v-on:click="sendUserID(id)" class="btn ">Add an demandes</button>
       <div v-if="AddDemande" class="mb-5">
         <AddDemandes @close="close" :getDemands="getDemands" />
       </div>
@@ -19,11 +19,11 @@
         :key="demandeInfo.id"
         class="container z-0 m-auto px-6 py-6 text-gray-500 md:px-12 xl:px-0"
       >
-        <div class="mx-auto flex col gap-6 md:w-3/5">
+        <div class="mx-auto flex col gap-6 md:w-3/5 justify-center ">
           <div
             class="bg-white rounded-2xl shadow-xl px-8 py-12 sm:px-12 lg:px-8"
           >
-            <div class="mb-12 space-y-4 flex flex-wrap">
+            <div class="mb-12 space-y-4 flex flex-col ">
               <div class="flex items-center">
                 <div class="flex">
                   <img
@@ -151,17 +151,21 @@
                 </div>
               </div>
               <div>
+                <div>
                 <h3 class="text-2xl font-semibold text-left text-blue-700">
                   {{ demandeInfo.Sujet }}
                 </h3>
                 <p class="mb-6 text-left">
                   {{ demandeInfo.Description }}
                 </p>
+                </div>
+                <div>
                 <img
                   :src="'http://127.0.0.1:8000/images/Demands/' + demandeInfo.image"
-                  class="rounded w-[704px]"
+                  class="rounded "
                   alt=""
                 />
+                </div>
               </div>
             </div>
           </div>

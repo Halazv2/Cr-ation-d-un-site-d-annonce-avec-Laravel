@@ -2,7 +2,7 @@
   <div>
     <!-- <h1>This is an offres page</h1> -->
     <div class="py-16">
-      <button v-on:click="sendUserID(id)">Add an Offer</button>
+      <button v-on:click="sendUserID(id)" class="btn">Add an Offer</button>
       <div v-if="AddOffre" class="mb-5">
         <add-offres @close="close" :getOffres="getOffres" />
       </div>
@@ -154,7 +154,7 @@
                 </p>
                 <img
                   :src="'http://127.0.0.1:8000/images/' + offreInfo.image"
-                  class="rounded w-[704px]"
+                  class="rounded "
                   alt=""
                 />
               </div>

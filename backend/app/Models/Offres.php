@@ -15,4 +15,8 @@ class Offres extends Model
         'Description',
         'image'
     ];  
+    public function User()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 }
